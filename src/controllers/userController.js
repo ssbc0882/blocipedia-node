@@ -4,7 +4,7 @@ const sgMail = require("@sendgrid/mail");
 
 module.exports = {
     signUp(req, res, next) {
-        res.render("users/sign_up");
+        res.render("users/signup");
     },
 
     create(req, res, next) {
@@ -19,7 +19,7 @@ module.exports = {
         userQueries.createUser(newUser, (err, user) => {
             if (err) {
                 req.flash("error", err);
-                res.redirect("/users/sign_up");
+                res.redirect("/users/signup");
             } else {
 
                 passport.authenticate("local")(req, res, () => {
@@ -31,7 +31,7 @@ module.exports = {
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
                 const msg = {
-                    to: newUser.email,
+                    to: req.body.email,
                     from: 'verify@example.com',
                     subject: 'Verification email',
                     text: 'Please verify that you made an acoount with Blocipedia',
