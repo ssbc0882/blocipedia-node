@@ -17,5 +17,19 @@ module.exports = {
         } else {
             return next();
         }
+    },
+
+    validateWikis(req, res, next) {
+        if (req.method === "POST") {
+            req.checkBody("title", "must be at least 2 characters in length").isLength({ min: 3 });
+            req.checkBody("body", "must be at least 8 characters in length").isLength({ min: 8 });
+        }
+
+        const errors = req.validationErrors();
+        if (errors) {
+            req.flash("error", errors);
+        } else {
+            return next();
+        }
     }
 }

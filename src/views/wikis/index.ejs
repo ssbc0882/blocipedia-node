@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../static/partials/head.ejs %>
+</head>
+
+<body>
+    <main class="containter">
+        <% include ../static/partials/navbar.ejs %>
+
+        <h1>Wikis</h1>
+
+        <% if(currentUser) { %>
+        <a href="/wiki/new" class="btn btn-success">New Wiki</a>
+        <% } %>
+
+        <ul class="list-group">
+            <% wiki.forEach((wiki) => { %>
+            <li class="list-group-item">
+                <a href="/wiki/<%= wiki.id %>"> <%= wiki.title %></a>
+            </li>
+            <% }) %>
+        </ul>
+    </main>
+
+</body>
+
+</html>
