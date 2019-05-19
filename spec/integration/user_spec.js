@@ -29,12 +29,12 @@ describe("routes : users", () => {
         })
     })
 
-    describe("POST /users", () => {
+    describe("POST /users/signup", () => {
 
         it("should create a new user with valid values and redirect", (done) => {
 
             const options = {
-                url: base,
+                url: `${base}signup`,
                 form: {
                     username: "testing",
                     email: "user@example.com",
@@ -42,8 +42,10 @@ describe("routes : users", () => {
                 }
             }
             request.post(options, (err, res, body) => {
+                console.log("SEE IT", options)
                 User.findOne({ where: { email: "user@example.com" } })
                     .then((user) => {
+                        console.log("WHERE IS IT", user)
                         expect(user).not.toBeNull();
                         expect(user.email).toBe("user@example.com");
                         expect(user.id).toBe(1);
@@ -59,7 +61,7 @@ describe("routes : users", () => {
         it("should not create a new user with invalid attributes and redirect", (done) => {
             request.post(
                 {
-                    url: base,
+                    url: `${base}signup`,
                     form: {
                         name: "Joe",
                         email: "no",
