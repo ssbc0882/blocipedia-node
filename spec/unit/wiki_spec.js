@@ -70,13 +70,27 @@ describe("Wiki", () => {
                 email: "test@example.com",
                 password: "123456789"
             })
-                .then((newUser) => {
-                    expect(this.wiki.userId).toBe(this.wiki.id);
-                    this.wiki.setUser(newUser)
+                .then((user) => {
+                    this.user = user;
+
+                    Wiki.create({
+                        title: "Learning Codes",
+                        body: "Takes a lifetime to excel",
+                        private: false,
+                        userId: this.user.id
+                    })
                         .then((wiki) => {
-                            expect(this.wiki.userId).toBe(newUser.id);
+                            expect(wiki.userId).toBe(this.user.id);
+                            done()
+                        })
+                        .catch((err) => {
+                            console.log(err);
                             done();
                         })
+                })
+                .catch((err) => {
+                    console.log(err);
+                    done();
                 })
         })
     })

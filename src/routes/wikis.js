@@ -4,13 +4,13 @@ const router = express.Router();
 const wikiController = require("../controllers/wikiController");
 const validation = require("./validation");
 
-router.get("/wiki", wikiController.index);
-router.get("wiki/new", wikiController.new);
-router.get("/wiki/:id", wikiController.show);
-router.get("/wiki/:id/edit", wikiController.edit);
+router.get("/wikis", wikiController.index);
+router.get("wikis/new", wikiController.new);
+router.get("/wikis/:id", wikiController.show);
+router.get("/wikis/:id/edit", wikiController.edit);
 
-router.post("/wiki/create", validation.validateWikis, wikiController.create);
-router.post("/wiki/destroy", wikiController.destroy);
-router.post("/wiki/:id/update", validation.validateWikis, wikiController.update);
+router.post("/wikis/create", validation.validateWikis, wikiController.create);
+router.post("/wikis/destroy", wikiController.destroy);
+router.post("/wikis/:id/update", validation.validateWikis, wikiController.update);
 
 module.exports = router;
