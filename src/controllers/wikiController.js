@@ -3,11 +3,11 @@ const wikiQueries = require("../db/queries.wikis.js");
 module.exports = {
 
     index(req, res, next) {
-        wikiQueries.getAllWikis((err, wiki) => {
+        wikiQueries.getAllWikis((err, wikis) => {
             if (err) {
                 res.redirect(500, "static/index");
             } else {
-                res.render("wikis/index", { wiki });
+                res.render("wikis/index", { wikis });
             }
         })
     },
@@ -20,11 +20,11 @@ module.exports = {
         let newWiki = {
             title: req.body.title,
             body: req.body.body,
-            private: false,
             userId: req.user.id
         };
 
         wikiQueries.addWiki(newWiki, (err, wiki) => {
+            console.log("HERE", wiki)
             if (err) {
                 res.redirect(500, "/wikis/new");
             } else {
@@ -46,9 +46,9 @@ module.exports = {
     destroy(req, res, next) {
         wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
             if (err) {
-                res.redirect(err, `/wikis/${req.params.id}`);
+                res.redirect(500, `/wikis/${req.params.id}`);
             } else {
-                res.redirect(303, "/wikis/");
+                res.redirect(303, "/wikis");
             }
         })
     },
@@ -64,7 +64,7 @@ module.exports = {
     },
 
     update(req, res, next) {
-        wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+        wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
             if (err) {
                 res.redirect(401, `/wikis/${req.params.id}/edit`)
             } else {

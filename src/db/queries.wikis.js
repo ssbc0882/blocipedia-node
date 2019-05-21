@@ -3,8 +3,8 @@ const Wiki = require("./models").Wiki;
 module.exports = {
     getAllWikis(callback) {
         return Wiki.findAll()
-            .then((wiki) => {
-                callback(null, wiki);
+            .then((wikis) => {
+                callback(null, wikis);
             })
             .catch((err) => {
                 callback(err);
@@ -14,7 +14,9 @@ module.exports = {
     addWiki(newWiki, callback) {
         return Wiki.create({
             title: newWiki.title,
-            body: newWiki.body
+            body: newWiki.body,
+            private: newWiki.private,
+            userId: newWiki.userId
         })
             .then((wiki) => {
                 callback(null, wiki);
@@ -34,8 +36,10 @@ module.exports = {
             })
     },
 
-    deleteWiki(req, callback) {
-        return Wiki.findById(req.params.id)
+    deleteWiki(id, callback) {
+        return Wiki.findById({
+            where: { id }
+        })
             .then((wiki) => {
                 callback(null, wiki);
             })

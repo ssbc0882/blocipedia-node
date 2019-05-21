@@ -11,12 +11,10 @@
 
         <h1>Wikis</h1>
 
-        <% if(currentUser) { %>
         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
-        <% } %>
 
         <ul class="list-group">
-            <% wiki.forEach((wiki) => { %>
+            <% wikis.forEach((wiki) => { %>
             <li class="list-group-item">
                 <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %></a>
             </li>

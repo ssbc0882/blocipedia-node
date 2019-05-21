@@ -19,7 +19,7 @@
   "homepage": "https://github.com/ssbc0882/blocipedia-node#readme",
   "devDependencies": {
     "faker": "^4.1.0",
-    "jasmine": "^3.0.0",
+    "jasmine": "^3.4.0",
     "nodemon": "^1.19.0",
     "request": "^2.83.0"
   },

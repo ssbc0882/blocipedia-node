@@ -20,14 +20,18 @@ describe("routes : wikis", () => {
                 })
                     .then((user) => {
                         this.user = user;
+
                         Wiki.create({
                             title: "Learning Code",
                             body: "Takes a lifetime to excel",
-                            userId: user.id,
-                            private: false
+                            userId: this.user.id
                         })
                             .then((wiki) => {
                                 this.wiki = wiki;
+                                done();
+                            })
+                            .catch((err) => {
+                                console.log(err);
                                 done();
                             })
                     })
@@ -51,6 +55,7 @@ describe("routes : wikis", () => {
     })
 
     describe("GET /wikis/new", () => {
+
         it("should render a new wiki form", (done) => {
             request.get(`${base}new`, (err, res, body) => {
                 expect(err).toBeNull();
@@ -61,43 +66,23 @@ describe("routes : wikis", () => {
     })
 
     describe("POST /wikis/create", () => {
+
         it("should create a new wiki and redirect", (done) => {
             const options = {
                 url: `${base}create`,
                 form: {
-                    title: "Cooking Tips",
-                    body: "Save time in the kitchen",
+                    title: "Learning Code",
+                    body: "Takes a lifetime to excel",
                     userId: this.user.id
                 }
             }
 
             request.post(options, (req, res, body) => {
-                Wiki.findOne({ where: { title: "Cooking Tips" } })
+                Wiki.findOne({ where: { title: "Learning Code" } })
                     .then((wiki) => {
                         expect(wiki).not.toBeNull();
-                        expect(wiki.title).toBe("Cooking Tips");
-                        expect(wiki.body).toBe("Saving time in the kitchen");
-                        done();
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        done();
-                    })
-            })
-        })
-
-        it("should not create a new wiki that fails validations", (done) => {
-            const options = {
-                url: `${base}create`,
-                form: {
-                    title: "a",
-                    body: "b"
-                }
-            }
-
-            request.post(options, (err, res, body) => {
-                Wiki.findOne({ where: { title: "a" } })
-                    .then((wiki) => {
+                        expect(wiki.title).toBe("Learning Code");
+                        expect(wiki.body).toBe("Takes a lifetime to excel");
                         done();
                     })
                     .catch((err) => {
@@ -109,16 +94,18 @@ describe("routes : wikis", () => {
     })
 
     describe("GET /wikis/:id", () => {
+
         it("should render a view with the selected wiki", (done) => {
             request.get(`${base}${this.wiki.id}`, (err, res, body) => {
                 expect(err).toBeNull();
-                expect(body).toContain("Saving time in the kitchen");
+                expect(body).toContain("Takes a lifetime to excel");
                 done();
             })
         })
     })
 
     describe("POST /wikis/:id/destroy", () => {
+
         it("should delete a wiki with the associated id", (done) => {
             Wiki.findAll()
                 .then((wiki) => {
@@ -143,24 +130,25 @@ describe("routes : wikis", () => {
     })
 
     describe("GET /wikis/:id/edit", () => {
+
         it("should render a view with the an edit wiki form", (done) => {
             request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain("Edit Wiki");
-                expect(body).toBeNull("Saving time in the kitchen");
+                expect(body).toContain("Takes a lifetime to excel");
                 done();
             })
         })
     })
 
     describe("POST /wikis/:id/update", () => {
+
         it("should update the wiki with the given values", (done) => {
             const options = {
                 url: `${base}${this.wiki.id}/update`,
                 form: {
                     title: "Cooking Tips",
-                    body: "Saving time in the kitchen",
-                    userId: this.user.id
+                    body: "Saving time in the kitchen"
                 }
             }
 
@@ -168,7 +156,7 @@ describe("routes : wikis", () => {
                 expect(err).toBeNull();
 
                 Wiki.findOne({
-                    where: { id: 1 }
+                    where: { id: this.wiki.id }
                 })
                     .then((wiki) => {
                         expect(wiki.body).toBe("Saving time in the kitchen");
