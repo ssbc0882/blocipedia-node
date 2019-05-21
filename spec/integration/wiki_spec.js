@@ -13,6 +13,7 @@ describe("routes : wikis", () => {
 
         sequelize.sync({ force: true })
             .then((res) => {
+
                 User.create({
                     username: "testing",
                     email: "test@example.com",
