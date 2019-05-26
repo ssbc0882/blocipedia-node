@@ -2,6 +2,7 @@ const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const sgMail = require("@sendgrid/mail");
 
+
 module.exports = {
     signUp(req, res, next) {
         res.render("users/signup");
@@ -51,7 +52,7 @@ module.exports = {
         passport.authenticate("local")(req, res, function () {
             if (!req.user) {
                 req.flash("notice", "Sign in failed. Please try again");
-                req.redirect("/users/sign_in");
+                req.redirect("/users/signup");
             } else {
                 req.flash("notice", "You've successfully signed in");
                 res.redirect("/");
@@ -63,7 +64,51 @@ module.exports = {
         req.logout();
         req.flash("notice", "You've successfully signed out");
         res.redirect("/");
+    },
+
+    //upgrade to premium account
+
+    payment(req, res, next) {
+        res.render("users/payment");
+    },
+
+    upgradePremium(req, res, next) {
+        var stripe = require("stripe")('pk_test_VJYXfuhTbA1yxw7xH0MYsxuR00F2uwMJ3x');
+
+        const token = req.body.stripeToken;
+
+        const charge = stripe.charges.create({
+            amount: 1000,
+            currency: 'usd',
+            description: 'Premium charge',
+            source: token
+        })
+            .then((charge) => {
+                userQueries.updateUserRole(req.params.id, 1, (err, user) => {
+                    if (err || user == null) {
+                        req.flash("notice", "No results found");
+                        res.redirect(404, `/users/${req.params.id}`);
+                    } else {
+                        req.flash("ntoice", "You've upgraded to premium!");
+                        res.redirect(`/users/${req.params.id}`);
+                    }
+                })
+            })
+    },
+
+    downgrade(req, res, next) {
+
+        userQueries.updateUserRole(req.params.id, 0, (err, user) => {
+            if (err || user == null) {
+                req.flash("notice", "No results found");
+                res.redirect(404, `/users/${req.params.id}`);
+            } else {
+                req.flash("ntoice", "You're account is at standard");
+                res.redirect(`/users/${req.params.id}`);
+            }
+        })
     }
+
 
 }
 

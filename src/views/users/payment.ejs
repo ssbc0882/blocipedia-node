@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../static/partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="main-container">
+        <% include ../static/partials/messages.ejs %>
+
+        <h1><%= currentUser.name %></h1>
+
+        <% if(currentUser.role === 0) { %>
+
+        <h1>Upgrade Account</h1>
+
+        <form action="/users/<%= currentUser.id %>/upgradePremium" method="post" id="payment-form">
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_VJYXfuhTbA1yxw7xH0MYsxuR00F2uwMJ3x" data-amount="1000" data-name="Stripe"
+                data-description="Upgrade To Premium Membership"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto">
+                </script>
+        </form>
+        <% } %>
+
+    </main>
+    <% include ../static/partials/baseScripts.ejs %>
+
+</body>
