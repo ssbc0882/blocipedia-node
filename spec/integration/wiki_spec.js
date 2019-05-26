@@ -51,9 +51,9 @@ describe("routes : wikis", () => {
                     request.get({
                         url: "http://localhost:3000/auth/fake",
                         form: {
-                            id: user.id,
+                            userId: user.id,
                             username: user.username,
-                            email: user.email,
+                            email: user.email
                         }
                     },
                         (err, res, body) => {

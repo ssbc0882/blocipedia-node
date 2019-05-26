@@ -20,16 +20,32 @@
         <ul class="list-unstyled">
             <% if (wikis) { %>
             <% wikis.forEach((wiki) => {  %>
+            <% if (!wiki.private) { %>
             <li>
                 <a href="/wikis/<%= wiki.id %>">
                     <%= wiki.title %>
                 </a>
             </li>
+            <% } %>
             <% }) %>
             <% } %>
+
         </ul>
 
-        <% if (user._isAdmin() || user._isPremium() ) { %>
+        <ul class="list-unstyled">
+            <% wikis.forEach((wiki, index) => { %>
+            <% if(currentUser && (currentUser.id === wiki.userId && wiki.private === true)) { %>
+            <li>
+                <a href="/wikis/<%= wiki.id %>">
+                    <%= wiki.title %>
+                </a>
+            </li>
+            <% } %>
+            <% }) %>
+
+        </ul>
+
+        <% if (user.isAdmin() || user.isPremium() ) { %>
         <form style="display:initial" action="/users/<%= currentUser.id %>/downgrade" method="post">
             <button type="submit" class="btn btn-danger"> Downgrade to Standard </button>
         </form>

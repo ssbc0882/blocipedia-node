@@ -103,7 +103,7 @@ module.exports = {
                 req.flash("notice", "No results found");
                 res.redirect(404, `/users/${req.params.id}`);
             } else {
-                req.flash("ntoice", "You're account is at standard");
+                req.flash("notice", "Your account is at standard");
                 res.redirect(`/users/${req.params.id}`);
             }
         })

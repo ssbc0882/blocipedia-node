@@ -77,5 +77,26 @@ module.exports = {
                     callback("Forbidden")
                 }
             })
+    },
+
+    private(req, boolean, callback) {
+        return Wiki.findById(req.params.id)
+            .then((wiki) => {
+                if (!wiki) {
+                    return callback("Wiki not found");
+                }
+
+                const authorized = new Authorizer(req.user, wiki).private();
+
+                if (authorized) {
+                    wiki.update({ private: boolean }, { fields: ["private"] })
+                        .then(() => {
+                            callback(null, wiki);
+                        })
+                        .catch((err) => {
+                            callback(err);
+                        })
+                }
+            })
     }
 }

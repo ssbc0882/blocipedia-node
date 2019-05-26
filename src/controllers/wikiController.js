@@ -32,7 +32,7 @@ module.exports = {
 
             wikiQueries.addWiki(newWiki, (err, wiki) => {
                 if (err) {
-                    res.redirect(500, "/wikis/new");
+                    res.redirect(500, "/wikis");
                 } else {
                     res.redirect(303, `/wikis/${wiki.id}`);
                 }
@@ -79,6 +79,26 @@ module.exports = {
         wikiQueries.updateWiki(req, req.body, (err, wiki) => {
             if (err) {
                 res.redirect(401, `/wikis/${req.params.id}/edit`)
+            } else {
+                res.redirect(`/wikis/${wiki.id}`);
+            }
+        })
+    },
+
+    updatePrivate(req, res, next) {
+        wikiQueries.private(req, true, (err, wiki) => {
+            if (err || wiki == null) {
+                res.redirect(401, "/wikis");
+            } else {
+                res.redirect(`/wikis/${wiki.id}`);
+            }
+        })
+    },
+
+    updatePublic(req, res, next) {
+        wikiQueries.private(req, false, (err, wiki) => {
+            if (err || wiki == null) {
+                res.redirect(401, "/wikis");
             } else {
                 res.redirect(`/wikis/${wiki.id}`);
             }
