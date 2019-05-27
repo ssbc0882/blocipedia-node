@@ -11,20 +11,32 @@
     <main class="container">
         <% include ../static/partials/messages.ejs %>
 
-        <h1><%= wiki.title %></h1>
+        <h1><%= wikiMarkdown.title %></h1>
 
         <% if(currentUser) { %>
-        <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
-
-        <% if(currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin())) { %>
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+        <a href="/wikis/<%= wikiMarkdown.id %>/edit" class="btn btn-warning">Edit</a>
+        <% if(currentUser && (currentUser.id == wikiMarkdown.userId || currentUser.isAdmin())) { %>
+        <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
         <% }  %>
         <% } %>
+        <% if(wikiMarkdown.private === true) { %>
+        <% if(currentUser && (currentUser.isAdmin() || currentUser.isPremium() || currentUser._isOwner()))  { %>
+        <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePublic" method="post">
+            <button type="submit" class="btn btn-primary">Change to Public</button>
+        </form>
+        <% } %>
+        <% } else { %>
+        <% if(currentUser && (currentUser.isAdmin() || currentUser.isPremium() || currentUser._isOwner()))  { %>
+        <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePrivate" method="post">
+            <button type="submit" class="btn btn-dark">Change to Private</button>
+        </form>
+        <% } %>
+        <% } %>
 
-        <p><%= wiki.body %></p>
 
+        <p><%= wikiMarkdown.body %></p>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
