@@ -18,7 +18,8 @@
         <h4> Wikis: </h4>
 
         <ul class="list-unstyled">
-            <% if (wikis) { %>
+            <% if (wikis.length !== 0) { %>
+            <h4>Public Wikis</h4>
             <% wikis.forEach((wiki) => {  %>
             <% if (!wiki.private) { %>
             <li>
@@ -33,6 +34,7 @@
         </ul>
 
         <ul class="list-unstyled">
+            <h4>Private Wikis</h4>
             <% wikis.forEach((wiki, index) => { %>
             <% if(currentUser && (currentUser.id === wiki.userId && wiki.private === true)) { %>
             <li>

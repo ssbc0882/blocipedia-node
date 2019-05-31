@@ -19,18 +19,19 @@
         <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/destroy" method="post">
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
-        <% }  %>
         <% } %>
-        <% if(wikiMarkdown.private === true) { %>
-        <% if(currentUser && (currentUser.isAdmin() || currentUser.isPremium() || currentUser._isOwner()))  { %>
+        <% } %>
+
+        <% if (wikiMarkdown.private) { %>
+        <% if (currentUser && (currentUser.isAdmin() || currentUser.isPremium() )) { %>
         <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePublic" method="post">
-            <button type="submit" class="btn btn-primary">Change to Public</button>
+            <button type="submit" class="btn btn-primary btn-sm"> Change to Public </button>
         </form>
         <% } %>
         <% } else { %>
-        <% if(currentUser && (currentUser.isAdmin() || currentUser.isPremium() || currentUser._isOwner()))  { %>
+        <% if (currentUser && (currentUser.isAdmin() || currentUser.isPremium() )) { %>
         <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePrivate" method="post">
-            <button type="submit" class="btn btn-dark">Change to Private</button>
+            <button type="submit" class="btn btn-primary btn-sm"> Change to Private </button>
         </form>
         <% } %>
         <% } %>
