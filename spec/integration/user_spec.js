@@ -105,7 +105,6 @@ describe("routes : users", () => {
 
         it("should render a payment screen", (done) => {
             request.get(`${base}${this.user.id}/payment`, (err, res, body) => {
-                console.log("MARBLES", body)
                 expect(body).toContain("Upgrade Account");
                 done();
             })

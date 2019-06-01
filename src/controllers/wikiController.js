@@ -62,25 +62,16 @@ module.exports = {
         })
     },
 
-    destroy(req, res, next) {
-        wikiQueries.deleteWiki(req, (err, wiki) => {
-            if (err) {
-                res.redirect(500, "/wikis");
-            } else {
-                res.redirect(303, "/wikis");
-            }
-        })
-    },
-
     edit(req, res, next) {
 
         wikiQueries.getWiki(req.params.id, (err, wiki) => {
             if (err || wiki == null) {
+                console.log(err);
                 res.redirect(404, "/");
             } else {
                 const authorized = new Authorizer(req.user, wiki).edit();
                 if (authorized) {
-                    res.render("wikis/edit", { wiki });
+                    res.render("wikis/edit", { wiki, });
                 } else {
                     req.flash("notice", "You are not authorized to do that.");
                     res.redirect(`/wikis/${req.params.id}`);
@@ -88,6 +79,16 @@ module.exports = {
 
             }
 
+        })
+    },
+
+    destroy(req, res, next) {
+        wikiQueries.deleteWiki(req, (err, wiki) => {
+            if (err) {
+                res.redirect(500, "/wikis");
+            } else {
+                res.redirect(303, "/wikis");
+            }
         })
     },
 

@@ -1,4 +1,7 @@
 /node_modules
 +.envsendgrid.env
+.env
 sendgrid.env
 
+export SENDGRID_API_KEY='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' > sendgrid.env
+echo sendgrid.env

@@ -10,6 +10,8 @@
 
     <main class="container">
 
+        <% include ../static/partials/messages.ejs %>
+
         <h1>Edit Wiki</h1>
 
         <form action="/wikis/<%= wiki.id %>/update" method="post">
@@ -26,6 +28,10 @@
                     placeholder="Enter content here"><%= wiki.body %></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
+
+            <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
+            <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
+            <% } %>
         </form>
     </main>
 

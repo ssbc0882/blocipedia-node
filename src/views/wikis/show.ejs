@@ -27,12 +27,13 @@
         <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePublic" method="post">
             <button type="submit" class="btn btn-primary btn-sm"> Change to Public </button>
         </form>
-        <% } %>
+
         <% } else { %>
         <% if (currentUser && (currentUser.isAdmin() || currentUser.isPremium() )) { %>
         <form style="display:initial" action="/wikis/<%= wikiMarkdown.id %>/updatePrivate" method="post">
             <button type="submit" class="btn btn-primary btn-sm"> Change to Private </button>
         </form>
+        <% } %>
         <% } %>
         <% } %>
 
