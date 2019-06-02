@@ -17,12 +17,16 @@ module.exports = class ApplicationPolicy {
         return this.user && this.user.role === 1;
     }
 
+    isStandard() {
+        return this.user && this.user.role === 0;
+    }
+
     isPrivate() {
         return this.record && this.record.private === true;
     }
 
     isPublic() {
-        return this.record && this.record.private === true;
+        return this.record && this.record.private === false;
     }
 
     new() {
@@ -38,6 +42,7 @@ module.exports = class ApplicationPolicy {
     }
 
     edit() {
+
         return this.user != null;
     }
 

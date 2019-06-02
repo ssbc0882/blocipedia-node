@@ -154,10 +154,10 @@ describe("routes : wikis", () => {
 
             it("should render a view with the an edit wiki form", (done) => {
                 request.get(`${base}${this.wiki.id}/edit`, (err, res, body) => {
-                    console.log("IT THERE", body);
                     expect(err).toBeNull();
                     expect(body).toContain("Edit Wiki");
                     done();
+                    console.log("IT THERE", `${base}${this.wiki.id}/edit`);
                 })
             })
         })

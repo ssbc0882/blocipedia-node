@@ -14,10 +14,6 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
         return this.edit();
     }
 
-    edit() {
-        return this._isOwner() || this.isAdmin() || this.isPublic();
-    }
-
     private() {
         return this.isAdmin() || this.isPremium();
     }
