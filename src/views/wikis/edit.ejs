@@ -28,17 +28,12 @@
                     placeholder="Enter content here"><%= wiki.body %></textarea>
             </div>
 
-            <% if(currentUser.role !== 0 && (wiki.userId === currentUser.id)){ %>
+            <% if((currentUser && (currentUser.role === "admin" || currentUser.role === "premium")) && wiki.userId === currentUser.id){ %>
             <div class="form-group">
                 <label for="private">Wiki private</label>
                 <textarea rows="4" class="form-control" name="private"
                     placeholder="Is this a private wiki?"><%= wiki.private %></textarea>
             </div>
-            <% } %>
-
-
-            <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
-            <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
             <% } %>
 
             <button type="submit" class="btn btn-primary">Update</button>

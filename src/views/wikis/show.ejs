@@ -11,7 +11,8 @@
     <main class="container">
         <% include ../static/partials/messages.ejs %>
 
-        <h1><%= wikiMarkdown.title %></h1>
+        <h1><%- wikiMarkdown.title %></h1>
+        <p><%- wikiMarkdown.body %></p>
 
         <% if(currentUser) { %>
         <a href="/wikis/<%= wikiMarkdown.id %>/edit" class="btn btn-warning">Edit</a>
@@ -37,8 +38,6 @@
         <% } %>
         <% } %>
 
-
-        <p><%= wikiMarkdown.body %></p>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

@@ -16,33 +16,30 @@
         <form action="/users/signup" method="POST">
 
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" aria-describedby="nameHelp"
-                    placeholder="Enter name">
-
+                <label for="name">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Enter username">
+                <small class="text-muted" id="nameHelp">username must not be used</small>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" name="email" aria-describedby="emailHelp"
-                    placeholder="Enter email">
+                <input type="email" class="form-control" name="email" placeholder="Enter email">
                 <small class="text-muted" id="emailHelp">email address must be a valid address</small>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" aria-describedby="passwordHelp"
-                    placeholder="Enter password">
+                <input type="password" class="form-control" name="password" placeholder="Enter password">
                 <small class="text-muted" id="passwordHelp">password must match confirmation below</small>
-
-                <div class="form-group">
-                    <label for="passwordConfirmation">Password confirmation</label>
-                    <input type="password" class="form-control" name="passwordConfirmation"
-                        aria-describedby="passwordHelp" placeholder="Enter password confirmation">
-                </div>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirmation">Password confirmation</label>
+                <input type="password" class="form-control" name="passwordConfirmation"
+                    placeholder="Enter password confirmation">
             </div>
 
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+
+            <input type="submit" value="Sign Up" class="btn btn-primary" />
         </form>
     </main>
 
